@@ -1,5 +1,5 @@
 from json import JSONEncoder, JSONDecodeError, loads, dump
-import category
+from category import Category, Decoder
 
 
 # define the Encoder class used in serialization
@@ -31,7 +31,7 @@ class Categories:
             list. We have avoided this by overloading the __eq__() operator in
             Category class. More on this during the lectures.
         """
-        decoder = category.Decoder()
+        decoder = Decoder()
 
         try:
             with open("categories.txt") as f:
@@ -45,12 +45,13 @@ class Categories:
         return cls.categories
 
     @classmethod
-    def remove_category(cls, cat):
+    def remove_category(cls, name: str):
         """ Removes a category from the categories collection. We pass the category
             to be removed as a parameter to teh function and then, as a first step
             we remove it from the class variable 'categories'. Then, in a second step
             we iterate that collection and we serialize element by element
         """
+        cat = Category(name)
         cls.load_categories()
         if cat in cls.categories:
             cls.categories.remove(cat)
@@ -62,11 +63,12 @@ class Categories:
                     f.write("\n")
 
     @classmethod
-    def add_category(cls, cat):
+    def add_category(cls, name: str):
         """ Adds a new category in the categories collection. We need to save the
             new category on the disk too, so we have to call teh Encoder class to
             transform teh Python object in a JSON representation
         """
+        cat = Category(name)
         cls.load_categories()
         if cat not in cls.categories:
             with open("categories.txt", 'a') as f:

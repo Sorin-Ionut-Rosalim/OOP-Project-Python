@@ -1,18 +1,32 @@
 from categories import Categories
-from category import Category
 from json import JSONDecodeError
+import os
 
+
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # define some functions to be used in the main menu. You can follow the
 # suggestion described in the lab requirement, by simulating a switch
 # instruction using a dictionary, or just using multiple 'if' branches
 # which is, obviously, much uglier
-def to_categories():
-    def add_category(category):
-        pass
 
-    def remove_category(category):
-        pass
+
+def to_categories():
+    def add_category():
+        category = input("Insert the name of the new category:\n\t")
+        Categories.add_category(category)
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
+
+    def remove_category():
+        category = input(
+            "Insert the name for the category you want to remove:\n\t")
+        Categories.remove_category(category)
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     def display_categories():
         try:
@@ -21,6 +35,9 @@ def to_categories():
                 print(cat.name)
         except JSONDecodeError as e:
             categories = None
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     print("""
     1. Add a category
@@ -39,13 +56,19 @@ def to_categories():
 
 def to_products():
     def add_product(category):
-        pass
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     def remove_product(category):
-        pass
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     def display_products():
-        pass
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     print("""
     1. Add a product
@@ -65,10 +88,14 @@ def to_products():
 def to_orders():
 
     def place_order():
-        pass
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     def display_orders():
-        pass
+        if (input("Do you want to continue: 1/0\n\t")):
+            cls()
+            menu()
 
     print("""
     1. Place a new order
@@ -90,6 +117,9 @@ def Exit():
 
 def error_handler():
     print("Action not supported")
+    if (input("Do you want to continue: 1/0\n\t")):
+        cls()
+        menu()
 
 
 def menu():
@@ -109,26 +139,4 @@ def menu():
 
 
 if __name__ == "__main__":
-    # below some usage examples
-
-    # create some categories
-    cat_1 = Category("Amplifiers")
-    cat_2 = Category("Receivers")
-    cat_3 = Category("Speakers")
-
-    # add them inside the Categories collection, and also save them
-    # on the disk
-    Categories.add_category(cat_1)
-    Categories.add_category(cat_2)
-    Categories.add_category(cat_3)
-
-    # display the existing categories
-
-    # # remove one category from the Categories collection
-    # Categories.remove_category(cat_3)
-
-    # display again the existing categories
-    # for cat in categories:
-    #     print(cat.name)
-
     menu()
