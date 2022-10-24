@@ -18,6 +18,8 @@ def to_categories():
         Categories.add_category(category)
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_categories()
+        else:
             menu()
 
     def remove_category():
@@ -26,6 +28,8 @@ def to_categories():
         Categories.remove_category(category)
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_categories()
+        else:
             menu()
 
     def display_categories():
@@ -37,6 +41,8 @@ def to_categories():
             categories = None
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_categories()
+        else:
             menu()
 
     print("""
@@ -58,16 +64,22 @@ def to_products():
     def add_product(category):
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_products()
+        else:
             menu()
 
     def remove_product(category):
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_products()
+        else:
             menu()
 
     def display_products():
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_products()
+        else:
             menu()
 
     print("""
@@ -90,11 +102,15 @@ def to_orders():
     def place_order():
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_orders()
+        else:
             menu()
 
     def display_orders():
         if (input("Do you want to continue: 1/0\n\t")):
             cls()
+            to_orders()
+        else:
             menu()
 
     print("""
@@ -111,7 +127,7 @@ def to_orders():
     action()
 
 
-def Exit():
+def exit():
     print("Exit called")
 
 
@@ -120,6 +136,8 @@ def error_handler():
     if (input("Do you want to continue: 1/0\n\t")):
         cls()
         menu()
+    else:
+        exit()
 
 
 def menu():
@@ -132,7 +150,7 @@ def menu():
     option = int(input("Enter an option between 1 and 4: "))
 
     actions = {1: to_categories, 2: to_products,
-               3: to_orders, 4: Exit}
+               3: to_orders, 4: exit}
 
     action = actions.get(option, error_handler)
     action()
