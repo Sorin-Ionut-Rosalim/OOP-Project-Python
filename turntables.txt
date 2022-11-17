@@ -1,0 +1,4 @@
+"{\"name\": \"Bose\", \"speed\": 100, \"conn\": \"Bluetooth\", \"size\": 1}"
+"{\"name\": \"Bose\", \"speed\": 100, \"conn\": \"Bluetooth\", \"size\": 17}"
+"{\"name\": \"Bose\", \"speed\": 100, \"conn\": \"Bluetooth\", \"size\": 170}"
+"{\"name\": \"Bose\", \"speed\": 100, \"conn\": \"Bluetooth\", \"size\": 179}"

@@ -1,3 +1,4 @@
-"{\"name\": \"Amplifiers\"}"
-"{\"name\": \"Receivers\"}"
-"{\"name\": \"Speakers\"}"
+"{\"name\": \"Speaker\"}"
+"{\"name\": \"Receiver\"}"
+"{\"name\": \"Turntable\"}"
+"{\"name\": \"Amplifier\"}"

@@ -1,5 +1,9 @@
 from categories import Categories
-from json import JSONDecodeError
+from amplifier import Amplifier
+from receiver import Receiver
+from speaker import Speaker
+from turntable import Turntable
+from json import JSONDecodeError, loads
 import os
 
 
@@ -16,7 +20,7 @@ def to_categories():
     def add_category():
         category = input("Insert the name of the new category:\n\t")
         Categories.add_category(category)
-        if (input("Do you want to continue: 1/0\n\t")):
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_categories()
         else:
@@ -26,20 +30,21 @@ def to_categories():
         category = input(
             "Insert the name for the category you want to remove:\n\t")
         Categories.remove_category(category)
-        if (input("Do you want to continue: 1/0\n\t")):
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_categories()
         else:
             menu()
 
     def display_categories():
-        try:
-            categories = Categories.load_categories()
+        categories = Categories.load_categories()
+        if categories != []:
             for cat in categories:
                 print(cat.name)
-        except JSONDecodeError as e:
-            categories = None
-        if (input("Do you want to continue: 1/0\n\t")):
+        else:
+            print("No categories found")
+
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_categories()
         else:
@@ -61,22 +66,93 @@ def to_categories():
 
 
 def to_products():
-    def add_product(category):
-        if (input("Do you want to continue: 1/0\n\t")):
+
+    def collect_data(category: str) -> Amplifier | Receiver | Turntable | Speaker:
+        if category == "Amplifier":
+            name = input("Name: ")
+            power = int(input("Power: "))
+            channels = int(input("NO. channels: "))
+            size = int(input("Size: "))
+            return Amplifier(name, power, channels, size)
+
+        elif category == "Receiver":
+            name = input("Name: ")
+            color = input("Color: ")
+            channels = input("NO. channels: ")
+            size = int(input("Size: "))
+            return Receiver(name, color, channels, size)
+
+        elif category == "Turntable":
+            name = input("Name: ")
+            speed = int(input("Speed: "))
+            conn = int(input("Wired/Bluetooth (0/1): "))
+            size = int(input("Size: "))
+            return Turntable(name, speed, conn, size)
+
+        elif category == "Speaker":
+            name = input("Name: ")
+            power = int(input("Power: "))
+            wheight = int(input("Wheight: "))
+            size = int(input("Size: "))
+            return Speaker(name, power, wheight, size)
+
+    def create_options() -> dict:
+        categories = Categories.load_categories()
+        menu = {}
+        for index, cat in enumerate(categories):
+            print(f'{index + 1}. {cat.name}')
+            menu[index + 1] = cat.name
+
+        return menu
+
+    def add_product():
+        menu = create_options()
+        category = int(input("Enter the category of the product: "))
+        obj = collect_data(menu.get(category, error_handler))
+        Amplifier.add_amplifier(obj)
+        Receiver.add_receiver(obj)
+        Turntable.add_turntable(obj)
+        Speaker.add_speaker(obj)
+        print("Product added")
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_products()
         else:
             menu()
 
-    def remove_product(category):
-        if (input("Do you want to continue: 1/0\n\t")):
+    def remove_product():
+        menu = create_options()
+        category = int(input("Enter the category of the product: "))
+        with open(f"{(menu.get(category, error_handler)).lower()}s.txt", "r") as file:
+            print("You have the following products in this category:")
+            for i, line in enumerate(file):
+                data = loads(line)
+                print(f"%d. %s" % (i, data))
+        obj = collect_data(menu.get(category, error_handler))
+        print(obj)
+        Amplifier.remove_amplifier(obj)
+        Receiver.remove_receiver(obj)
+        Turntable.remove_turntable(obj)
+        Speaker.remove_speaker(obj)
+        print("Product removed")
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_products()
         else:
             menu()
 
     def display_products():
-        if (input("Do you want to continue: 1/0\n\t")):
+        categories = Categories.load_categories()
+        for cat in categories:
+            with open(f"{(cat.name).lower()}s.txt", "r") as file:
+                print(
+                    f"You have the following products in the {cat.name} category:")
+                for i, line in enumerate(file):
+                    data = loads(line)
+                    print(f"%d. %s" % (i, data))
+            print("\n\n")
+
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_products()
         else:
@@ -100,14 +176,14 @@ def to_products():
 def to_orders():
 
     def place_order():
-        if (input("Do you want to continue: 1/0\n\t")):
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_orders()
         else:
             menu()
 
     def display_orders():
-        if (input("Do you want to continue: 1/0\n\t")):
+        if (input("Do you want to continue: 1/0\n\t") == "1"):
             cls()
             to_orders()
         else:
@@ -133,7 +209,7 @@ def exit():
 
 def error_handler():
     print("Action not supported")
-    if (input("Do you want to continue: 1/0\n\t")):
+    if (input("Do you want to continue: 1/0\n\t") == "1"):
         cls()
         menu()
     else:
