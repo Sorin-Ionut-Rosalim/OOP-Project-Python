@@ -1,0 +1,1 @@
+"{\"name\": \"Best Speaker\", \"power\": 300, \"wheight\": 5, \"size\": 20}"

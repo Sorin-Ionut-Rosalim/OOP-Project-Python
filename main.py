@@ -24,6 +24,7 @@ def to_categories():
             cls()
             to_categories()
         else:
+            cls()
             menu()
 
     def remove_category():
@@ -34,6 +35,7 @@ def to_categories():
             cls()
             to_categories()
         else:
+            cls()
             menu()
 
     def display_categories():
@@ -48,6 +50,7 @@ def to_categories():
             cls()
             to_categories()
         else:
+            cls()
             menu()
 
     print("""
@@ -98,17 +101,17 @@ def to_products():
 
     def create_options() -> dict:
         categories = Categories.load_categories()
-        menu = {}
+        options_menu = {}
         for index, cat in enumerate(categories):
             print(f'{index + 1}. {cat.name}')
-            menu[index + 1] = cat.name
+            options_menu[index + 1] = cat.name
 
-        return menu
+        return options_menu
 
     def add_product():
-        menu = create_options()
+        options_menu = create_options()
         category = int(input("Enter the category of the product: "))
-        obj = collect_data(menu.get(category, error_handler))
+        obj = collect_data(options_menu.get(category, error_handler))
         Amplifier.add_amplifier(obj)
         Receiver.add_receiver(obj)
         Turntable.add_turntable(obj)
@@ -118,17 +121,18 @@ def to_products():
             cls()
             to_products()
         else:
+            cls()
             menu()
 
     def remove_product():
-        menu = create_options()
+        options_menu = create_options()
         category = int(input("Enter the category of the product: "))
         with open(f"{(menu.get(category, error_handler)).lower()}s.txt", "r") as file:
             print("You have the following products in this category:")
             for i, line in enumerate(file):
                 data = loads(line)
                 print(f"%d. %s" % (i, data))
-        obj = collect_data(menu.get(category, error_handler))
+        obj = collect_data(options_menu.get(category, error_handler))
         print(obj)
         Amplifier.remove_amplifier(obj)
         Receiver.remove_receiver(obj)
@@ -139,6 +143,7 @@ def to_products():
             cls()
             to_products()
         else:
+            cls()
             menu()
 
     def display_products():
@@ -156,6 +161,7 @@ def to_products():
             cls()
             to_products()
         else:
+            cls()
             menu()
 
     print("""
@@ -180,6 +186,7 @@ def to_orders():
             cls()
             to_orders()
         else:
+            cls()
             menu()
 
     def display_orders():
@@ -187,6 +194,7 @@ def to_orders():
             cls()
             to_orders()
         else:
+            cls()
             menu()
 
     print("""
@@ -213,6 +221,7 @@ def error_handler():
         cls()
         menu()
     else:
+        cls()
         exit()
 
 
