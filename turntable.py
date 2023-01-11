@@ -67,7 +67,6 @@ class Turntable(Product):
         else:
             self.conn = "Bluetooth"
         self.size = size
-        print("COX")
 
     def __str__(self):
         return f'{type(self).__name__}: {self.name} {self.speed} {self.conn} {self.size}'
